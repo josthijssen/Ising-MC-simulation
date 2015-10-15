@@ -1,4 +1,3 @@
-
 import matplotlib.pyplot as plt
 from matplotlib import animation
 from matplotlib.widgets import Slider, Button, RadioButtons
@@ -18,20 +17,7 @@ class AnimatedSpins(object):
         -- J: coupling constant
         -- B: field
         -- Ramp: speed at which J is increased/decreased
-        -- spins: the array containing the spin values
-        -- 
-        --                                               
-        -- pos: numpy array of shape [numpoints, 3] containing the position coordinates           
-        -- mom: numpy array of shape [numpoints, 3] containing the momentum coordinates
-        -- part_update: function which calculates the new particle positions
-           This function must output the updated arrays pos and mom                      
-        -- args: the function part_update takes as arguments numpoints, box_len, pos, mom, *args 
-        Example: anim_md.AnimatedScatter(n, box_len, pos, simulate, mom, n_t, dt)
-        where 'simulate' is defined as
-        def simulate(n, box_len, pos, mom, part_update, args):
-          ...
-          ...
-          return pos, mom
+        -- simul_step: routine which performs the update
         """
         self.l = l
         self.J = J
@@ -79,7 +65,7 @@ class AnimatedSpins(object):
         self.Lslider = Slider(self.axl, 'L', 1, 200, valinit=self.l,  valfmt=u'%3.0f')
         self.im1 = self.ax1.add_patch(patches.Rectangle((0.0, 0.0), 1.0, 0.0,))
         self.im1.set_height(0.0)
-        self.im2 = self.ax2.imshow(0.5*(self.spins+1), cmap='Greys',  interpolation='nearest')
+        self.im2 = self.ax2.imshow(0.5*(self.spins+1), cmap='YlGn',  interpolation='nearest')
         self.ani = animation.FuncAnimation(self.fig, self.display, 
                         self.simul_step(self.l, self.spins, self.singweight, self.spinup), interval=40)
         self.Jslider.on_changed(self.update)

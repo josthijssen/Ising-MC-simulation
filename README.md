@@ -1,1 +1,1 @@
-# Ising-MC-simulation
+# Ising-MC-simulation, corrected
